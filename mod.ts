@@ -1,11 +1,19 @@
-import { Application, Router } from 'https://deno.land/x/oak@v10.1.0/mod.ts';
+import {
+  Application,
+  Router,
+  Body,
+} from 'https://deno.land/x/oak@v10.1.0/mod.ts';
 import * as log from 'https://deno.land/std@0.122.0/log/mod.ts';
 import { play, getRandomPlayableHand } from './gameEngine.ts';
 
+const getValueFromBody = async function (body: Body) {
+  const value = await body.value;
+  const playedValue = value.get('text');
+  return playedValue;
+};
+
 const port = Number(Deno.env.get('PORT')) || 8080;
-
 const application = new Application();
-
 const router = new Router();
 
 router.get('/', (context) => {
@@ -13,17 +21,15 @@ router.get('/', (context) => {
 });
 
 router.post('/', async (context) => {
-  const body = context.request.body();
-  const value = await body.value;
-  const playedValue = value.get('text');
-  const computerHand = getRandomPlayableHand();
+  const playedValue = await getValueFromBody(context.request.body());
+  const computerHand = getRandomPlayableHand(playedValue);
 
   try {
     const result = await play(playedValue, computerHand);
     if (result.win) {
-      context.response.body = `Computer played ${computerHand}, you win! 🥳`;
+      context.response.body = `Computer played ${result.computerHand}, you win! 🥳`;
     } else {
-      context.response.body = `Computer played ${computerHand}, you loose! 😭`;
+      context.response.body = `Computer played ${result.computerHand}, you loose! 😭`;
     }
   } catch (error: any) {
     context.response.body = error.message;

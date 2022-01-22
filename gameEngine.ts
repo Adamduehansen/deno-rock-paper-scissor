@@ -1,4 +1,4 @@
-export enum PlayableValue {
+export enum playableValue {
   rock = 'rock',
   paper = 'paper',
   scissor = 'scissor',
@@ -6,30 +6,30 @@ export enum PlayableValue {
 
 export interface GameResult {
   win: boolean;
-  computerHand: PlayableValue;
+  computerHand: playableValue;
 }
 
 const isPlayableValue = function (value: string): boolean {
-  return value in PlayableValue;
+  return value in playableValue;
 };
 
 const isPlayerWinner = function (
-  playerValue: PlayableValue,
-  computerValue: PlayableValue
+  playerValue: playableValue,
+  computerValue: playableValue
 ): boolean {
   if (
-    playerValue === PlayableValue.paper &&
-    computerValue === PlayableValue.rock
+    playerValue === playableValue.paper &&
+    computerValue === playableValue.rock
   ) {
     return true;
   } else if (
-    playerValue === PlayableValue.rock &&
-    computerValue === PlayableValue.scissor
+    playerValue === playableValue.rock &&
+    computerValue === playableValue.scissor
   ) {
     return true;
   } else if (
-    playerValue === PlayableValue.scissor &&
-    computerValue === PlayableValue.paper
+    playerValue === playableValue.scissor &&
+    computerValue === playableValue.paper
   ) {
     return true;
   } else {
@@ -39,7 +39,7 @@ const isPlayerWinner = function (
 
 export const play = function (
   playerValue: string,
-  computerValue: PlayableValue
+  computerValue: playableValue
 ): Promise<GameResult> {
   return new Promise<GameResult>((resolve, reject) => {
     if (!isPlayableValue(playerValue)) {
@@ -51,7 +51,7 @@ export const play = function (
     } else {
       resolve({
         win: isPlayerWinner(
-          PlayableValue[playerValue as keyof typeof PlayableValue],
+          playableValue[playerValue as keyof typeof playableValue],
           computerValue
         ),
         computerHand: computerValue,
@@ -60,6 +60,14 @@ export const play = function (
   });
 };
 
-export const getRandomPlayableHand = function (): PlayableValue {
-  return PlayableValue.scissor;
+export const getRandomPlayableHand = function (
+  playerHand: playableValue
+): playableValue {
+  let computerHand = playerHand;
+  while (computerHand === playerHand) {
+    const index = Math.floor(Math.random() * Object.keys(playableValue).length);
+    const key = Object.keys(playableValue)[index];
+    computerHand = playableValue[key as keyof typeof playableValue];
+  }
+  return computerHand;
 };

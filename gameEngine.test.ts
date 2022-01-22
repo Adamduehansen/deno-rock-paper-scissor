@@ -2,11 +2,11 @@ import {
   assertEquals,
   assertRejects,
 } from 'https://deno.land/std@0.122.0/testing/asserts.ts';
-import { play, PlayableValue } from './gameEngine.ts';
+import { play, playableValue } from './gameEngine.ts';
 
 Deno.test('Should throw error if non-playable value was given', async () => {
   await assertRejects(() => {
-    return play('non-playable value', PlayableValue.paper);
+    return play('non-playable value', playableValue.paper);
   }, Error);
 });
 
@@ -14,10 +14,10 @@ Deno.test(
   'Should declare player winner when playing paper over rock',
   async () => {
     // Arrange
-    const playedHand = PlayableValue.paper.toString();
+    const playedHand = playableValue.paper.toString();
 
     // Act
-    const result = await play(playedHand, PlayableValue.rock);
+    const result = await play(playedHand, playableValue.rock);
 
     // Assert
     assertEquals(result.win, true);
@@ -28,10 +28,10 @@ Deno.test(
   'Should declare player winner when playing rock over scissor',
   async () => {
     // Arrange
-    const playedHand = PlayableValue.rock.toString();
+    const playedHand = playableValue.rock.toString();
 
     // Act
-    const result = await play(playedHand, PlayableValue.scissor);
+    const result = await play(playedHand, playableValue.scissor);
 
     // Assert
     assertEquals(result.win, true);
@@ -42,10 +42,10 @@ Deno.test(
   'Should declare player winner when playing scissor over paper',
   async () => {
     // Arrange
-    const playedHand = PlayableValue.scissor.toString();
+    const playedHand = playableValue.scissor.toString();
 
     // Act
-    const result = await play(playedHand, PlayableValue.paper);
+    const result = await play(playedHand, playableValue.paper);
 
     // Assert
     assertEquals(result.win, true);
@@ -56,10 +56,10 @@ Deno.test(
   'should declare computer winner when playing paper over rock',
   async () => {
     // Arrange
-    const playedHand = PlayableValue.rock.toString();
+    const playedHand = playableValue.rock.toString();
 
     // Act
-    const result = await play(playedHand, PlayableValue.paper);
+    const result = await play(playedHand, playableValue.paper);
 
     // Assert
     assertEquals(result.win, false);
@@ -70,10 +70,10 @@ Deno.test(
   'should declare computer winner when playing rock over scissor',
   async () => {
     // Arrange
-    const playedHand = PlayableValue.scissor.toString();
+    const playedHand = playableValue.scissor.toString();
 
     // Act
-    const result = await play(playedHand, PlayableValue.rock);
+    const result = await play(playedHand, playableValue.rock);
 
     // Assert
     assertEquals(result.win, false);
@@ -84,10 +84,10 @@ Deno.test(
   'should declare computer winner when playing scissor over paper',
   async () => {
     // Arrange
-    const playedHand = PlayableValue.paper.toString();
+    const playedHand = playableValue.paper.toString();
 
     // Act
-    const result = await play(playedHand, PlayableValue.scissor);
+    const result = await play(playedHand, playableValue.scissor);
 
     // Assert
     assertEquals(result.win, false);
