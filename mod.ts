@@ -8,9 +8,9 @@ const application = new Application();
 
 const router = new Router();
 
-// router.get('/', (context) => {
-//   context.response.body = 'Hello, World!';
-// });
+router.get('/', (context) => {
+  context.response.body = 'Hello, World!';
+});
 
 router.post('/', async (context) => {
   const body = context.request.body();
