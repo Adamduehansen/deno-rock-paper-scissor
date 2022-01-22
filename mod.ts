@@ -17,7 +17,7 @@ const application = new Application();
 const router = new Router();
 
 router.get('/', (context) => {
-  context.response.body = 'Hello, World!';
+  context.response.body = 'Rock, papper, scissor API.';
 });
 
 router.post('/', async (context) => {
@@ -31,7 +31,7 @@ router.post('/', async (context) => {
     } else {
       context.response.body = `Computer played ${result.computerHand}, you loose! 😭`;
     }
-  } catch (error: any) {
+  } catch (error) {
     context.response.body = error.message;
   }
 });
