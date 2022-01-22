@@ -18,12 +18,13 @@ router.post('/', async (context) => {
   const playedValue = value.get('text');
   const computerHand = getRandomPlayableHand();
 
-  log.info(
-    `Recieved a request with '${playedValue}', computer hand is '${computerHand}'`
-  );
-
   try {
-    const result = play(playedValue, computerHand);
+    const result = await play(playedValue, computerHand);
+    if (result.win) {
+      context.response.body = `Computer played ${computerHand}, you win! 🥳`;
+    } else {
+      context.response.body = `Computer played ${computerHand}, you loose! 😭`;
+    }
   } catch (error: any) {
     context.response.body = error.message;
   }
