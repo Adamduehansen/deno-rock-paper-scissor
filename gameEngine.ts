@@ -5,7 +5,7 @@ export enum playableValue {
 }
 
 export interface GameResult {
-  win: boolean;
+  win?: boolean;
   computerHand: playableValue;
 }
 
@@ -16,7 +16,7 @@ const isPlayableValue = function (value: string): boolean {
 const isPlayerWinner = function (
   playerValue: playableValue,
   computerValue: playableValue
-): boolean {
+): boolean | undefined {
   if (
     playerValue === playableValue.paper &&
     computerValue === playableValue.rock
@@ -32,6 +32,8 @@ const isPlayerWinner = function (
     computerValue === playableValue.paper
   ) {
     return true;
+  } else if (playerValue === computerValue) {
+    return undefined;
   } else {
     return false;
   }
@@ -60,14 +62,8 @@ export const play = function (
   });
 };
 
-export const getRandomPlayableHand = function (
-  playerHand: playableValue
-): playableValue {
-  let computerHand = playerHand;
-  while (computerHand === playerHand) {
-    const index = Math.floor(Math.random() * Object.keys(playableValue).length);
-    const key = Object.keys(playableValue)[index];
-    computerHand = playableValue[key as keyof typeof playableValue];
-  }
-  return computerHand;
+export const getRandomPlayableHand = function (): playableValue {
+  const index = Math.floor(Math.random() * Object.keys(playableValue).length);
+  const key = Object.keys(playableValue)[index];
+  return playableValue[key as keyof typeof playableValue];
 };

@@ -22,12 +22,14 @@ router.get('/', (context) => {
 
 router.post('/', async (context) => {
   const playedValue = await getValueFromBody(context.request.body());
-  const computerHand = getRandomPlayableHand(playedValue);
+  const computerHand = getRandomPlayableHand();
 
   try {
     const result = await play(playedValue, computerHand);
     if (result.win) {
       context.response.body = `Computer played ${result.computerHand}, you win! 🥳`;
+    } else if (result.win === undefined) {
+      context.response.body = `Computer played ${result.computerHand}, its a tie! 🥸`;
     } else {
       context.response.body = `Computer played ${result.computerHand}, you loose! 😭`;
     }

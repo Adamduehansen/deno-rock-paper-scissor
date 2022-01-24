@@ -93,3 +93,20 @@ Deno.test(
     assertEquals(result.win, false);
   }
 );
+
+Deno.test(
+  'Should declare tie when player has the same as computer',
+  async () => {
+    // Arrange
+
+    // Act
+    const resultRock = await play('rock', playableValue.rock);
+    const resultPaper = await play('paper', playableValue.paper);
+    const resultScissor = await play('scissor', playableValue.scissor);
+
+    // Assert
+    assertEquals(resultRock.win, undefined);
+    assertEquals(resultPaper.win, undefined);
+    assertEquals(resultScissor.win, undefined);
+  }
+);
