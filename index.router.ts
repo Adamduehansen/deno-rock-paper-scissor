@@ -19,6 +19,7 @@ router.post('/', async (context) => {
 
   try {
     const result = await play(playedValue, computerHand);
+    context.state.gameResult = result;
     if (result.win) {
       context.response.body = `Computer played ${result.computerHand}, you win! 🥳`;
     } else if (result.win === undefined) {

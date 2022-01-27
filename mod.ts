@@ -1,9 +1,17 @@
-import { Application } from './deps.ts';
-import * as log from 'https://deno.land/std@0.122.0/log/mod.ts';
+import { Application, log } from './deps.ts';
 import router from './index.router.ts';
+import { GameResult } from './gameEngine.ts';
+import logGameResultMiddleware from './logGameResultMiddleware.ts';
+
+export interface ApplicationState {
+  gameResult: GameResult;
+}
 
 const port = Number(Deno.env.get('PORT')) || 8080;
-const application = new Application();
+
+const application = new Application<ApplicationState>();
+
+application.use(logGameResultMiddleware);
 
 application.use(router.routes());
 
