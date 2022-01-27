@@ -1,5 +1,5 @@
-import { Router, Body } from './deps.ts';
-import { play, getRandomPlayableHand } from './gameEngine.ts';
+import { Router, Body } from '../deps.ts';
+import { play, getRandomPlayableHand } from '../gameEngine.ts';
 
 const getValueFromBody = async function (body: Body) {
   const value = await body.value;

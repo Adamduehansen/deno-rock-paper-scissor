@@ -1,5 +1,5 @@
-import { Context, log } from './deps.ts';
-import { ApplicationState } from './mod.ts';
+import { Context, log } from '../deps.ts';
+import { ApplicationState } from '../server.ts';
 
 const logGameResultMiddleware = async function (
   context: Context<ApplicationState, ApplicationState>,
