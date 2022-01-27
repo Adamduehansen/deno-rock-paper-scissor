@@ -1,11 +1,6 @@
-import { Router, Body } from '../deps.ts';
+import { Router } from '../deps.ts';
+import { getValueFromBody } from '../server.ts';
 import { play, getRandomPlayableHand } from '../gameEngine.ts';
-
-const getValueFromBody = async function (body: Body) {
-  const value = await body.value;
-  const playedValue = value.get('text');
-  return playedValue;
-};
 
 const router = new Router();
 
@@ -14,7 +9,7 @@ router.get('/', (context) => {
 });
 
 router.post('/', async (context) => {
-  const playedValue = await getValueFromBody(context.request.body());
+  const playedValue = await getValueFromBody(context.request.body(), 'text');
   const computerHand = getRandomPlayableHand();
 
   try {
