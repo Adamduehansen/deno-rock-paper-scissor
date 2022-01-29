@@ -7,6 +7,9 @@ const logGameResultMiddleware = async function (
 ) {
   await next();
   const { gameResult } = context.state;
+  if (!gameResult) {
+    return;
+  }
   log.info(`Game played - did player win? ${gameResult.win}`);
 };
 
