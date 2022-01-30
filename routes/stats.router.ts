@@ -24,6 +24,7 @@ router.post('/', async (context) => {
       sum(case when win = false then 1 else 0 end) AS lost,
       sum(case when win is null then 1 else 0 end) AS tie
     FROM game_result
+    WHERE user_id = '${userId}'
   `);
 
   const { total, win, lost, tie } = gameResults.rows[0];
